@@ -66,47 +66,36 @@ postool.hasMeseconsDebug = function()
 end -- hasMeseconsDebug
 
 
--- return a string to show on HUD containing info about biome that player is standing on
+-- return a string to show on HUD containing info about biome that player
+-- is standing on
 -- thanks to Montandalar for initial method
-if postool.hudBiomeVerbose then
-	postool.getBiomeDataForPlayer = function(oPlayer)
+postool.getBiomeDataForPlayer = function(oPlayer, bVerbose)
 
-		local tPos = oPlayer:get_pos()
-		-- Biome data for node below feet, otherwise it may be innacurate
-		-- due to y range limits.
-		tPos.y = tPos.y - 1
+	local tPos = oPlayer:get_pos()
+	-- Biome data for node below feet, otherwise it may be innacurate
+	-- due to y range limits.
+	tPos.y = tPos.y - 1
 
-		-- attempt to fetch biome data
-		local tBiome = minetest.get_biome_data(tPos)
-		if not tBiome then
-			return postool.hudTitleBiome .. 'N/A'
-		end
+	-- attempt to fetch biome data
+	local tBiome = minetest.get_biome_data(tPos)
+	if not tBiome then
+		return postool.hudTitleBiome .. 'N/A'
+	end
 
+	if bVerbose then
 		return string.format('%s%s (%d) Heat: %.2f Humidity: %.2f',
-			postool.hudTitleBiome,
-			minetest.get_biome_name(tBiome.biome),
-			tBiome.biome, tBiome.heat, tBiome.humidity)
+		postool.hudTitleBiome,
+		minetest.get_biome_name(tBiome.biome),
+		tBiome.biome, tBiome.heat, tBiome.humidity)
 
-	end -- getBiomeDataForPlayer
-else
-	postool.getBiomeDataForPlayer = function(oPlayer)
-
-		local tPos = oPlayer:get_pos()
-		-- Biome data for node below feet, otherwise it may be innacurate
-		-- due to y range limits.
-		tPos.y = tPos.y - 1
-
-		-- attempt to fetch biome data
-		local tBiome = minetest.get_biome_data(tPos)
-		if not tBiome then
-			return postool.hudTitleBiome .. 'N/A'
-		end
-
+	else
 		return string.format('%s%s (%d)',
 			postool.hudTitleBiome,
 			minetest.get_biome_name(tBiome.biome),
 			tBiome.biome)
+
 	end
+
 end -- getBiomeDataForPlayer
 
 

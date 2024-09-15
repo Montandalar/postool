@@ -7,7 +7,7 @@ local function S(s) return s end
 
 --settings
 postool = {
-	version = 20220817.1717,
+	version = 20240723.2039,
 	S = S,
 	-- Position of hud
 	hudPosX = tonumber(minetest.settings:get('postool.hud.offsetx') or 0.8),
@@ -29,7 +29,7 @@ postool = {
 	hudShowMesecons = minetest.settings:get_bool('postool.hud.defaultshowmesecons') or false,
 	hudShowMeseconsDetails = minetest.settings:get_bool('postool.hud.defaultshowmeseconsdetails') or false,
 	hudShowBiome = minetest.settings:get_bool('postool.hud.defaultshowbiome') or false,
-	hudBiomeVerbose = minetest.settings:get_bool('postool.biomedata.verbose') or false,
+	hudShowBiomeVerbose = minetest.settings:get_bool('postool.hud.defaultverbosebiomedata') or false,
 	-- wait at least this long before updating hud
 	hudMinUpdateInterval = tonumber(minetest.settings:get('postool.hud.minupdateinterval') or 2),
 	iCountToolUses = 0,
@@ -37,15 +37,17 @@ postool = {
 	serverChunkSize = math.max(1, tonumber(minetest.settings:get('chunksize') or 5)),
 	toolGridDisplayDuration = tonumber(minetest.settings:get('postool.tool.griddisplayduration') or 12),
 	toolSuppressChunkIndicator = minetest.settings:get_bool('postool.tool.suppresschunkindicator') or false,
+	toolUseVizLib = minetest.settings:get_bool('postool.tool.usevizlib') or false,
 }
 if nil == postool.hudShowNode then postool.hudShowNode = true end
 if nil == postool.hudShowBlock then postool.hudShowBlock = true end
 
-postool.hudColour = 0xFFFFFF  --text colour in hex format default is white
+postool.hudColour = 0xFFFFFF  -- text colour in hex format default is white
 
 -- deps
 postool.has_advtrains_mod = minetest.get_modpath('advtrains') and true
 postool.has_mesecons_debug_mod = minetest.get_modpath('mesecons_debug') and true
+postool.has_vizlib = minetest.get_modpath('vizlib') and postool.toolUseVizLib and true
 
 -- base path
 local sMP = minetest.get_modpath('postool')
